@@ -311,6 +311,8 @@ onUnmounted(() => {
 
   .game-container {
     min-width: auto;
+    max-width: 100%;
+    width: 100%;
   }
 
   .game-header {
@@ -335,19 +337,23 @@ onUnmounted(() => {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    width: 100%;
   }
 
   /* 모바일에서 섹션 순서 변경 */
   .center-panel {
     order: 1; /* 동전 섹션을 맨 위로 */
+    width: 100%;
   }
 
   .left-panel {
     order: 3; /* 내 승률 부분을 맨 아래로 */
+    width: 100%;
   }
 
   .right-panel {
     order: 2; /* 최근 게임 섹션을 그 아래로 */
+    width: 100%;
   }
 
   .coin-section {

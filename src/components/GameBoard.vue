@@ -69,7 +69,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { CoinSide } from '@/types/game'
-import { getCoinDisplayText, getResultDisplayText, getMmrChangeDisplayText } from '@/utils/gameLogic'
+import {
+  getCoinDisplayText,
+  getResultDisplayText,
+  getMmrChangeDisplayText,
+} from '@/utils/gameLogic'
 
 interface Props {
   isAnimating: boolean
@@ -243,22 +247,24 @@ function playGame(): void {
 
 @media (max-width: 768px) {
   .game-board {
-    padding: 1.5rem;
+    padding: 1rem;
   }
 
   .prediction-buttons {
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
   }
 
   .prediction-btn {
-    width: 100%;
-    max-width: 200px;
+    flex: 1;
+    max-width: 150px;
+    min-width: 120px;
   }
 
   .play-btn {
     width: 100%;
-    max-width: 250px;
+    max-width: 300px;
   }
 }
 </style>
