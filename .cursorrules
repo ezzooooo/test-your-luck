@@ -1,0 +1,226 @@
+# Test Your Luck - 동전 던지기 게임 프로젝트
+
+## 프로젝트 개요
+Vue 3와 Firebase를 활용한 웹 기반 동전 던지기 게임입니다. 플레이어는 동전의 앞면/뒷면을 예측하고, 승패에 따라 MMR 점수를 획득하거나 잃을 수 있습니다.
+
+## 핵심 기능
+- 닉네임 설정 및 게임 시작
+- 동전 던지기 애니메이션 (앞면/뒷면 예측)
+- MMR 점수 시스템 (시작: 10,000점, 승패 시 15~25점 랜덤 변동)
+- Firebase Firestore를 통한 실시간 데이터 저장
+- 랭킹 시스템 및 상위 퍼센트 표시
+- GitHub Actions를 통한 자동 배포
+
+## 기술 스택
+- **Frontend**: Vue 3 Composition API + TypeScript + Vite
+- **상태 관리**: Pinia stores
+- **라우팅**: Vue Router 4
+- **데이터베이스**: Firebase Firestore (계획됨)
+- **인증**: Firebase Auth (계획됨)
+- **빌드 도구**: Vite with rolldown
+- **테스트**: Vitest + jsdom
+- **린팅**: oxlint + ESLint
+- **배포**: GitHub Actions
+- **스타일링**: CSS3 + 반응형 디자인
+
+## 현재 프로젝트 상태
+- 기본 Vue 3 + TypeScript + Vite 템플릿 설정 완료
+- Pinia, Vue Router 4 설치됨
+- 테스트 환경 (Vitest) 설정 완료
+- 린팅 도구 (oxlint + ESLint) 설정 완료
+- Firebase 통합은 아직 구현되지 않음
+
+## 코딩 규칙
+
+### 1. Vue 3 Composition API 사용
+- `<script setup>` 문법 사용
+- TypeScript와 함께 사용
+- 반응형 데이터는 `ref`, `reactive` 사용
+- 컴포넌트 간 통신은 Pinia 스토어 활용
+
+### 2. 파일 구조
+
+#### 현재 구조
+```
+src/
+├── components/           # 재사용 가능한 컴포넌트
+│   ├── __tests__/       # 컴포넌트 테스트
+│   ├── icons/           # 아이콘 컴포넌트
+│   └── *.vue           # Vue 컴포넌트
+├── views/               # 페이지 컴포넌트 (HomeView, AboutView)
+├── stores/              # Pinia 스토어 (counter.ts)
+├── router/              # Vue Router 설정
+└── assets/              # 정적 자산 (CSS, 이미지)
+```
+
+#### 계획된 게임 구조
+```
+src/
+├── components/          # 재사용 가능한 컴포넌트
+│   ├── __tests__/       # 컴포넌트 테스트
+│   ├── GameBoard.vue   # 게임 보드 컴포넌트
+│   ├── CoinFlip.vue    # 동전 던지기 애니메이션
+│   ├── ScoreBoard.vue  # 점수 표시
+│   └── Ranking.vue     # 랭킹 시스템
+├── views/              # 페이지 컴포넌트
+│   ├── HomeView.vue    # 메인 페이지
+│   ├── GameView.vue    # 게임 페이지
+│   └── RankingView.vue # 랭킹 페이지
+├── stores/             # Pinia 스토어
+│   ├── game.ts         # 게임 상태 관리
+│   ├── user.ts         # 사용자 정보 관리
+│   └── ranking.ts      # 랭킹 데이터 관리
+├── services/           # API 서비스
+│   └── firebase.ts     # Firebase 설정 및 서비스
+└── utils/              # 유틸리티 함수
+    └── gameLogic.ts    # 게임 로직 함수
+```
+
+### 3. 네이밍 컨벤션
+- **컴포넌트**: PascalCase (예: `GameBoard.vue`)
+- **파일명**: kebab-case (예: `game-logic.ts`)
+- **변수/함수**: camelCase (예: `userScore`, `flipCoin()`)
+- **상수**: UPPER_SNAKE_CASE (예: `STARTING_MMR`)
+- **타입/인터페이스**: PascalCase (예: `GameResult`, `UserData`)
+
+### 4. TypeScript 사용 규칙
+- 모든 변수와 함수에 타입 명시
+- 인터페이스로 데이터 구조 정의
+- `any` 타입 사용 금지
+- 엄격한 타입 체크 활성화 (tsconfig.json에서 strict: true)
+- Vue 컴포넌트에서 `<script setup lang="ts">` 사용
+
+### 5. 컴포넌트 작성 규칙
+- 단일 책임 원칙 준수
+- Props와 Emits 명확히 정의
+- Computed와 Watch 적절히 활용
+- 생명주기 훅 필요시에만 사용
+
+### 6. Pinia 스토어 규칙
+- 각 도메인별로 스토어 분리
+- Actions에서 비동기 작업 처리
+- Getters로 계산된 값 제공
+- 상태 변경은 Actions를 통해서만
+
+### 7. Firebase 사용 규칙 (구현 예정)
+- Firestore 컬렉션 구조 명확히 정의
+- 에러 핸들링 필수
+- 실시간 리스너 적절히 정리
+- 보안 규칙 설정
+- Firebase 설정 정보는 환경변수 사용
+- 익명 로그인으로 사용자 인증
+
+### 8. 스타일링 규칙
+- CSS 모듈 또는 scoped 스타일 사용
+- 반응형 디자인 필수
+- 모바일 우선 접근법
+- 일관된 색상 팔레트 사용
+
+### 9. 에러 핸들링
+- try-catch 블록으로 비동기 작업 감싸기
+- 사용자 친화적인 에러 메시지 제공
+- 로딩 상태 표시
+- 네트워크 에러 처리
+
+### 10. 성능 최적화
+- 불필요한 리렌더링 방지
+- 이미지 최적화
+- 코드 스플리팅 활용
+- 메모이제이션 적절히 사용
+
+### 11. 테스트 규칙
+- Vitest + jsdom 환경 사용
+- 테스트 파일: `src/components/__tests__/*.spec.ts`
+- 컴포넌트 테스트 작성 필수
+- 단일 테스트 실행: `npm run test:unit -- filename.spec.ts`
+- 모든 테스트 통과 후 커밋
+
+### 12. 린팅 및 포맷팅
+- oxlint + ESLint 사용
+- Prettier로 코드 포맷팅
+- 린트 검사: `npm run lint`
+- 코드 포맷팅: `npm run format`
+- 커밋 전 린트 검사 필수
+
+## 게임 로직 규칙
+
+### 1. MMR 시스템
+- 시작 MMR: 10,000점
+- 승리 시: +15~25점 (랜덤)
+- 패배 시: -15~25점 (랜덤)
+- 점수는 항상 0 이상 유지
+
+### 2. 동전 던지기
+- 50% 확률로 앞면/뒷면 결정
+- 애니메이션 시간: 2-3초
+- 결과는 즉시 Firebase에 저장
+
+### 3. 랭킹 시스템
+- 전체 플레이어 수 기준 상위 퍼센트 계산
+- 실시간 랭킹 업데이트
+- 최소 10게임 이상 플레이한 사용자만 랭킹에 포함
+
+## 개발 가이드라인
+
+### 1. 개발 명령어
+```bash
+# 개발 서버 실행
+npm run dev
+
+# 프로덕션 빌드
+npm run build
+
+# 타입 체크
+npm run type-check
+
+# 린트 검사 및 수정
+npm run lint
+
+# 코드 포맷팅
+npm run format
+
+# 단위 테스트 실행
+npm run test:unit
+
+# 프로덕션 빌드 미리보기
+npm run preview
+```
+
+### 2. 커밋 메시지
+- `feat:` 새로운 기능
+- `fix:` 버그 수정
+- `docs:` 문서 수정
+- `style:` 코드 포맷팅
+- `refactor:` 코드 리팩토링
+- `test:` 테스트 추가/수정
+- `chore:` 빌드 과정 또는 보조 도구 변경
+
+### 3. PR 규칙
+- 기능별로 작은 단위로 PR 생성
+- 명확한 PR 제목과 설명
+- 코드 리뷰 필수
+- 테스트 통과 확인
+- 린트 검사 통과 확인
+
+### 4. 테스트
+- Vitest + jsdom 환경 사용
+- 컴포넌트 테스트 작성 필수
+- 테스트 파일은 `src/components/__tests__/` 디렉토리에 위치
+- 단일 테스트 실행: `npm run test:unit -- filename.spec.ts`
+
+## 주의사항
+- Firebase 설정 정보는 절대 커밋하지 말 것
+- 민감한 정보는 환경변수 사용
+- 사용자 데이터 보호에 주의
+- 게임 결과 조작 방지
+- 접근성 고려 (a11y)
+- 커밋 전 린트 검사 및 테스트 통과 확인
+
+## 참고사항
+- 한국어로 주석 작성
+- 코드는 영어로 작성
+- 일관된 코딩 스타일 유지
+- 정기적인 코드 리뷰
+- 지속적인 리팩토링
+- Vite + rolldown 빌드 도구 사용
+- oxlint + ESLint + Prettier 조합으로 코드 품질 관리

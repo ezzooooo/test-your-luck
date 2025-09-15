@@ -1,0 +1,20 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users collection - 인증된 사용자만 자신의 데이터 읽기/쓰기
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Games collection - 인증된 사용자만 게임 기록 생성 가능
+    match /games/{gameId} {
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+      allow read: if request.auth != null;
+    }
+
+    // 모든 인증된 사용자가 랭킹을 위해 사용자 데이터 읽기 가능
+    match /users/{userId} {
+      allow read: if request.auth != null;
+    }
+  }
+}
