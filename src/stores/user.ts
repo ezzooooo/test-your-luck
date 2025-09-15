@@ -3,7 +3,6 @@ import { ref, computed } from 'vue'
 import type { UserData, GameRecord } from '@/types/game'
 import { STARTING_MMR, calculateWinRate } from '@/utils/gameLogic'
 import { firestoreService } from '@/services/firestore'
-import { useAuthStore } from './auth'
 
 export const useUserStore = defineStore('user', () => {
   const userData = ref<UserData | null>(null)

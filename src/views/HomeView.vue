@@ -12,6 +12,7 @@
           <p>이 게임은 <strong>Google Chrome</strong>에서 최적화되어 있습니다.</p>
           <p>더 나은 성능과 안정성을 위해 Chrome을 사용해주세요!</p>
           <div class="chrome-actions">
+            <button @click="openInChrome" class="chrome-open-btn">🚀 크롬으로 열기</button>
             <a href="https://www.google.com/chrome/" target="_blank" class="chrome-download-btn">
               Chrome 다운로드
             </a>
@@ -173,6 +174,25 @@ function closeChromeModal(): void {
   localStorage.setItem('chrome-modal-seen', 'true')
 }
 
+function openInChrome(): void {
+  const currentUrl = window.location.href
+
+  // 크롬으로 열기 시도
+  const chromeUrl = `googlechrome://navigate?url=${encodeURIComponent(currentUrl)}`
+
+  // 크롬으로 열기 시도
+  window.location.href = chromeUrl
+
+  // 크롬이 없으면 Play Store로 이동
+  setTimeout(() => {
+    if (confirm('Chrome이 설치되어 있지 않습니다. Play Store에서 Chrome을 다운로드하시겠습니까?')) {
+      window.open('https://play.google.com/store/apps/details?id=com.android.chrome', '_blank')
+    }
+  }, 2000)
+
+  closeChromeModal()
+}
+
 function handleLoginSuccess(): void {
   console.log('Login successful!')
 }
@@ -296,6 +316,19 @@ onMounted(async () => {
   flex-wrap: wrap;
 }
 
+.chrome-open-btn {
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+  font-size: 0.9rem;
+}
+
 .chrome-download-btn {
   background: linear-gradient(135deg, #4285f4, #34a853);
   color: white;
@@ -305,6 +338,11 @@ onMounted(async () => {
   font-weight: 600;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
+}
+
+.chrome-open-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
 }
 
 .chrome-download-btn:hover {
