@@ -1,5 +1,28 @@
 <template>
   <div class="home-view">
+    <!-- 크롬 브라우저 안내 모달 -->
+    <div v-if="showChromeModal" class="chrome-modal-overlay" @click="closeChromeModal">
+      <div class="chrome-modal" @click.stop>
+        <div class="chrome-modal-header">
+          <h3>🌐 최적의 게임 경험을 위해</h3>
+          <button @click="closeChromeModal" class="close-btn">×</button>
+        </div>
+        <div class="chrome-modal-content">
+          <div class="chrome-icon">🟢</div>
+          <p>이 게임은 <strong>Google Chrome</strong>에서 최적화되어 있습니다.</p>
+          <p>더 나은 성능과 안정성을 위해 Chrome을 사용해주세요!</p>
+          <div class="chrome-actions">
+            <a href="https://www.google.com/chrome/" target="_blank" class="chrome-download-btn">
+              Chrome 다운로드
+            </a>
+            <button @click="closeChromeModal" class="continue-btn">
+              현재 브라우저로 계속
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="home-container">
       <div class="home-header">
         <div class="nav-spacer"></div>
@@ -110,13 +133,47 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useAuthStore } from '@/stores/auth'
 import GoogleLogin from '@/components/GoogleLogin.vue'
 
 const userStore = useUserStore()
 const authStore = useAuthStore()
+const showChromeModal = ref(false)
+
+// 브라우저 감지 함수
+function detectBrowser(): string {
+  const userAgent = navigator.userAgent.toLowerCase()
+  
+  if (userAgent.includes('chrome') && !userAgent.includes('edg') && !userAgent.includes('opr')) {
+    return 'chrome'
+  } else if (userAgent.includes('firefox')) {
+    return 'firefox'
+  } else if (userAgent.includes('safari') && !userAgent.includes('chrome')) {
+    return 'safari'
+  } else if (userAgent.includes('edg')) {
+    return 'edge'
+  } else if (userAgent.includes('opr')) {
+    return 'opera'
+  } else {
+    return 'other'
+  }
+}
+
+// 크롬이 아닌 브라우저인지 확인
+function shouldShowChromeModal(): boolean {
+  const browser = detectBrowser()
+  const hasSeenModal = localStorage.getItem('chrome-modal-seen')
+  
+  // 크롬이 아니고, 아직 모달을 본 적이 없으면 표시
+  return browser !== 'chrome' && !hasSeenModal
+}
+
+function closeChromeModal(): void {
+  showChromeModal.value = false
+  localStorage.setItem('chrome-modal-seen', 'true')
+}
 
 function handleLoginSuccess(): void {
   console.log('Login successful!')
@@ -130,10 +187,152 @@ async function handleLogout(): Promise<void> {
 onMounted(async () => {
   await authStore.initAuth()
   userStore.loadUserFromStorage()
+  
+  // 크롬 모달 표시 여부 확인
+  if (shouldShowChromeModal()) {
+    showChromeModal.value = true
+  }
 })
 </script>
 
 <style scoped>
+/* 크롬 모달 스타일 */
+.chrome-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.chrome-modal {
+  background: white;
+  border-radius: 20px;
+  padding: 0;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.chrome-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #e0e0e0;
+  background: linear-gradient(135deg, #4285f4, #34a853);
+  color: white;
+  border-radius: 20px 20px 0 0;
+}
+
+.chrome-modal-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.close-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.chrome-modal-content {
+  padding: 2rem;
+  text-align: center;
+}
+
+.chrome-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.chrome-modal-content p {
+  margin: 1rem 0;
+  color: #333;
+  line-height: 1.6;
+}
+
+.chrome-modal-content p strong {
+  color: #4285f4;
+  font-weight: 600;
+}
+
+.chrome-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.chrome-download-btn {
+  background: linear-gradient(135deg, #4285f4, #34a853);
+  color: white;
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
+}
+
+.chrome-download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(66, 133, 244, 0.4);
+  color: white;
+  text-decoration: none;
+}
+
+.continue-btn {
+  background: #f8f9fa;
+  color: #666;
+  border: 2px solid #e0e0e0;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.continue-btn:hover {
+  background: #e9ecef;
+  border-color: #d0d0d0;
+  transform: translateY(-1px);
+}
+
 .home-view {
   min-height: 100vh;
   padding: 2rem;
