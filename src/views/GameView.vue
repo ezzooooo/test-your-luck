@@ -292,7 +292,7 @@ onUnmounted(() => {
 
 @media (max-width: 768px) {
   .game-view {
-    padding: 1rem;
+    padding: 0.5rem;
   }
 
   .game-container {
@@ -303,11 +303,12 @@ onUnmounted(() => {
     flex-direction: column;
     gap: 1rem;
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+    padding: 0 0.5rem;
   }
 
   .game-header h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 
   .back-btn,
@@ -316,8 +317,37 @@ onUnmounted(() => {
     font-size: 0.9rem;
   }
 
+  .game-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* 모바일에서 섹션 순서 변경 */
+  .center-panel {
+    order: 1; /* 동전 섹션을 맨 위로 */
+  }
+
+  .left-panel {
+    order: 3; /* 내 승률 부분을 맨 아래로 */
+  }
+
+  .right-panel {
+    order: 2; /* 최근 게임 섹션을 그 아래로 */
+  }
+
   .coin-section {
-    padding: 1rem;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .game-history {
+    max-height: 250px;
+    margin-bottom: 1rem;
+  }
+
+  .score-board {
+    margin-top: 1rem;
   }
 }
 </style>

@@ -15,9 +15,7 @@
             <a href="https://www.google.com/chrome/" target="_blank" class="chrome-download-btn">
               Chrome 다운로드
             </a>
-            <button @click="closeChromeModal" class="continue-btn">
-              현재 브라우저로 계속
-            </button>
+            <button @click="closeChromeModal" class="continue-btn">현재 브라우저로 계속</button>
           </div>
         </div>
       </div>
@@ -145,7 +143,7 @@ const showChromeModal = ref(false)
 // 브라우저 감지 함수
 function detectBrowser(): string {
   const userAgent = navigator.userAgent.toLowerCase()
-  
+
   if (userAgent.includes('chrome') && !userAgent.includes('edg') && !userAgent.includes('opr')) {
     return 'chrome'
   } else if (userAgent.includes('firefox')) {
@@ -165,7 +163,7 @@ function detectBrowser(): string {
 function shouldShowChromeModal(): boolean {
   const browser = detectBrowser()
   const hasSeenModal = localStorage.getItem('chrome-modal-seen')
-  
+
   // 크롬이 아니고, 아직 모달을 본 적이 없으면 표시
   return browser !== 'chrome' && !hasSeenModal
 }
@@ -187,7 +185,7 @@ async function handleLogout(): Promise<void> {
 onMounted(async () => {
   await authStore.initAuth()
   userStore.loadUserFromStorage()
-  
+
   // 크롬 모달 표시 여부 확인
   if (shouldShowChromeModal()) {
     showChromeModal.value = true
@@ -720,7 +718,7 @@ onMounted(async () => {
 
 @media (max-width: 768px) {
   .home-view {
-    padding: 1rem;
+    padding: 0.5rem;
   }
 
   .home-container {
