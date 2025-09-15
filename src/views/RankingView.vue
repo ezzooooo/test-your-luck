@@ -34,12 +34,15 @@
         </div>
 
         <div class="right-panel">
-          <div v-if="userStore.currentUser && userStore.gamesPlayed < MIN_GAMES_FOR_RANKING"
-               class="ranking-qualification">
+          <div
+            v-if="userStore.currentUser && userStore.gamesPlayed < MIN_GAMES_FOR_RANKING"
+            class="ranking-qualification"
+          >
             <div class="qualification-card">
               <h3>🎮 랭킹 참여 안내</h3>
               <p>
-                랭킹에 참여하려면 최소 <strong>{{ MIN_GAMES_FOR_RANKING }}게임</strong>을 플레이해야 합니다.
+                랭킹에 참여하려면 최소 <strong>{{ MIN_GAMES_FOR_RANKING }}게임</strong>을 플레이해야
+                합니다.
               </p>
               <div class="progress-info">
                 <div class="progress-text">
@@ -48,16 +51,16 @@
                 <div class="progress-bar">
                   <div
                     class="progress-fill"
-                    :style="{ width: `${Math.min((userStore.gamesPlayed / MIN_GAMES_FOR_RANKING) * 100, 100)}%` }"
+                    :style="{
+                      width: `${Math.min((userStore.gamesPlayed / MIN_GAMES_FOR_RANKING) * 100, 100)}%`,
+                    }"
                   ></div>
                 </div>
                 <div class="remaining-games">
                   {{ Math.max(MIN_GAMES_FOR_RANKING - userStore.gamesPlayed, 0) }}게임 남음
                 </div>
               </div>
-              <router-link to="/game" class="play-more-btn">
-                더 플레이하기 🎲
-              </router-link>
+              <router-link to="/game" class="play-more-btn"> 더 플레이하기 🎲 </router-link>
             </div>
           </div>
 

@@ -144,9 +144,10 @@ onUnmounted(() => {
 }
 
 .game-container {
-  max-width: 1400px;
+  max-width: 1600px;
   min-width: 1200px;
   margin: 0 auto;
+  width: 100%;
 }
 
 .game-header {
@@ -184,15 +185,25 @@ onUnmounted(() => {
 
 .game-content {
   display: grid;
-  grid-template-columns: 300px 1fr 300px;
-  gap: 2rem;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 1.5rem;
   align-items: start;
+  width: 100%;
 }
 
 .center-panel {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
+  min-height: 100%;
+}
+
+.left-panel,
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-height: 100%;
 }
 
 .coin-section {
@@ -274,6 +285,11 @@ onUnmounted(() => {
 }
 
 @media (max-width: 1200px) {
+  .game-container {
+    min-width: auto;
+    max-width: 100%;
+  }
+
   .game-content {
     grid-template-columns: 1fr;
     gap: 1.5rem;
