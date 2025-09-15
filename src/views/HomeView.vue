@@ -727,14 +727,18 @@ onMounted(async () => {
   }
 
   .home-header {
-    flex-direction: column;
-    gap: 1rem;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
     text-align: center;
     margin-bottom: 0;
   }
 
   .home-header h1 {
-    font-size: 2rem;
+    font-size: 1.5rem;
+    flex: 1;
+    margin: 0;
   }
 
   .nav-spacer {
@@ -742,14 +746,15 @@ onMounted(async () => {
   }
 
   .header-actions {
-    flex-direction: column;
+    flex-direction: row;
     gap: 0.5rem;
   }
 
   .ranking-btn,
   .logout-btn {
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
   }
 
   .hero-content {

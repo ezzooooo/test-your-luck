@@ -316,21 +316,26 @@ onUnmounted(() => {
   }
 
   .game-header {
-    flex-direction: column;
-    gap: 1rem;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
     text-align: center;
     margin-bottom: 1rem;
     padding: 0 0.5rem;
   }
 
   .game-header h1 {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
+    flex: 1;
+    margin: 0;
   }
 
   .back-btn,
   .ranking-btn {
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
   }
 
   .game-content {
