@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import type { RankingData, UserData } from '@/types/game'
+import type { RankingData, UserData, GameRecord } from '@/types/game'
 import { MIN_GAMES_FOR_RANKING, calculateWinRate, calculatePercentile } from '@/utils/gameLogic'
 import { firestoreService } from '@/services/firestore'
 
