@@ -4,14 +4,17 @@
       <div class="setup-card">
         <div class="setup-header">
           <div v-if="authStore.currentUser?.photoURL" class="user-avatar">
-            <img :src="authStore.currentUser.photoURL" :alt="authStore.currentUser.displayName || 'User'" />
+            <img
+              :src="authStore.currentUser.photoURL"
+              :alt="authStore.currentUser.displayName || 'User'"
+            />
           </div>
           <div v-else class="user-avatar">
             <div class="avatar-placeholder">👤</div>
           </div>
           <h1>닉네임 설정</h1>
           <p class="welcome-text">
-            안녕하세요, {{ authStore.currentUser?.displayName || 'User' }}님!<br>
+            안녕하세요, {{ authStore.currentUser?.displayName || 'User' }}님!<br />
             게임에서 사용할 닉네임을 설정해주세요.
           </p>
         </div>
@@ -71,7 +74,9 @@ const loading = ref(false)
 const error = ref('')
 
 const isValidNickname = computed(() => {
-  return nickname.value.trim().length >= 2 && nickname.value.trim().length <= 10 && !nicknameError.value
+  return (
+    nickname.value.trim().length >= 2 && nickname.value.trim().length <= 10 && !nicknameError.value
+  )
 })
 
 function validateNickname(): void {
@@ -104,7 +109,7 @@ async function handleSubmit(): Promise<void> {
     if (userStore.currentUser) {
       await userStore.updateUserInFirestore({
         nickname: trimmedNickname,
-        isNicknameSet: true
+        isNicknameSet: true,
       })
     }
 
@@ -289,8 +294,12 @@ onMounted(() => {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .error-alert {
