@@ -51,9 +51,7 @@
                 class="history-item"
                 :class="game.outcome"
               >
-                <div class="history-prediction">
-                  {{ getCoinDisplayText(game.prediction) }} 예측
-                </div>
+                <div class="history-prediction">{{ getCoinDisplayText(game.prediction) }} 예측</div>
                 <div class="history-result">
                   {{ getCoinDisplayText(game.result) }} →
                   <span class="outcome">{{ game.outcome === 'win' ? '승' : '패' }}</span>
@@ -109,7 +107,7 @@ watch(
       rankingStore.updateUserInRanking(newUser)
     }
   },
-  { deep: true }
+  { deep: true },
 )
 
 onMounted(async () => {

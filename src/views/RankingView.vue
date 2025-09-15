@@ -347,7 +347,7 @@ onUnmounted(() => {
 
 @media (max-width: 768px) {
   .ranking-view {
-    padding: 1rem;
+    padding: 0.5rem;
   }
 
   .ranking-container {
@@ -358,17 +358,37 @@ onUnmounted(() => {
     flex-direction: column;
     gap: 1rem;
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+    padding: 0 0.5rem;
   }
 
   .ranking-header h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 
   .back-btn,
   .home-btn {
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
+  }
+
+  .ranking-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* 모바일에서 섹션 순서 변경 - 랭킹을 맨 위로 */
+  .center-panel {
+    order: 1; /* 랭킹 섹션을 맨 위로 */
+  }
+
+  .left-panel {
+    order: 2; /* 통계 섹션을 그 아래로 */
+  }
+
+  .right-panel {
+    order: 3; /* 안내/팁 섹션을 맨 아래로 */
   }
 
   .left-panel .ranking-stats {
